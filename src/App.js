@@ -5,6 +5,7 @@ import './App.css';
 function App() {
   const [value, setValue] = useState();
   const updateRef = useRef({})
+  const [error, setError] = useState()
   const [lists, setLists] = useState([
     {
       id: 1,
@@ -22,6 +23,10 @@ function App() {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(list ===''){
+      setError("Task can't be empty")
+      return;
+    }
     setLists(prev => {
 
       const newLists = {
@@ -85,6 +90,7 @@ function App() {
     })
     setLists(checks)
   }
+
   return (
     <div className="App">
       <h1>Todo List</h1>
@@ -98,6 +104,7 @@ function App() {
           />
         <button type="submit">ADD TASK</button>
         </div>
+        {setError && <span>{error}</span> }
         </form>
         <ul>
         {lists.map((item) => (
@@ -138,7 +145,7 @@ function App() {
                 type="text"
                 defaultValue={item.text}
                 ref ={ (element) => updateRef.current[item.id] = element}
-               
+                
               />
               <div className = "allbtn">
                 <button 
